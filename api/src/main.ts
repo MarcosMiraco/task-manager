@@ -1,5 +1,5 @@
 import { app } from '@src/app.js';
-import { connectDatabase } from './database/connections.js';
+import { connectDatabase } from '@database/connections.js';
 
 
 function bootstrap() {

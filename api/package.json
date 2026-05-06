@@ -23,11 +23,13 @@
         "dotenv": "^17.4.2",
         "express": "^5.2.1",
         "inversify": "^8.1.0",
+        "ioredis": "^5.10.1",
         "mongoose": "^9.6.1",
         "reflect-metadata": "^0.2.2"
     },
     "devDependencies": {
         "@types/express": "^5.0.6",
+        "@types/ioredis": "^4.28.10",
         "@types/mongoose": "^5.11.96",
         "@types/node": "^25.6.0",
         "tsx": "^4.21.0",

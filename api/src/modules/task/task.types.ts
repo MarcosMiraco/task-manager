@@ -1,6 +1,6 @@
-import type { ApiResponse } from "@shared/types/http.types.js";
 import type { Request, Response } from "express";
-import type { TPartialTask, TTask } from "./task.model.js";
+import type { ApiResponse } from "@shared/types/http.types.js";
+import type { TPartialTask, TTask } from "@tasks/task.model.js";
 
 
 export interface ITaskRepository {

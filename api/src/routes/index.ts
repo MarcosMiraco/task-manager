@@ -1,5 +1,5 @@
 import type { Application } from 'express';
-import { loadRouteModules } from './modules.js';
+import { loadRouteModules } from '@routes/modules.js';
 
 
 export async function registerRoutes(app: Application, prefix: string = '') {

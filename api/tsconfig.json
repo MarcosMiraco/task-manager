@@ -12,6 +12,7 @@
         "types": [],
         "paths": {
             "@src/*": ["./src/*"],
+            "@database/*": ["./src/database/*"],
             "@container/*": ["./src/shared/container/*"],
             "@shared/*": ["./src/shared/*"],
             "@routes/*": ["./src/routes/*"],

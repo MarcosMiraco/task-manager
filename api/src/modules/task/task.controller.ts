@@ -1,20 +1,17 @@
-import { inject, injectable } from 'inversify';
 import type { Request } from 'express';
+import { inject, injectable } from 'inversify';
 import { TaskService } from "@tasks/task.service.js";
 import type { ITaskController } from "@tasks/task.types.js";
-import { createApiResponse } from '@shared/utils/response.handler.js';
 import { TYPES } from '@shared/container/inversify.types.js';
+import { createApiResponse } from '@shared/utils/response.handler.js';
 
 
 @injectable()
 export class TaskController implements ITaskController {
-    private taskService: TaskService;
 
     constructor(
-        @inject(TYPES.ITaskService) taskService: TaskService
-    ) {
-        this.taskService = taskService;
-    }
+        @inject(TYPES.ITaskService) private taskService: TaskService
+    ) {}
 
     findAll = async () => {
         const serviceResponse = await this.taskService.findAll();

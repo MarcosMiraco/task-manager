@@ -1,19 +1,16 @@
 import { inject, injectable } from 'inversify';
 import { TaskRepository } from '@tasks/task.repository.js';
-import type { ITaskService } from '@tasks/task.types.js';
 import { TYPES } from '@shared/container/inversify.types.js';
-import type { TPartialTask } from './task.model.js';
+import type { ITaskService } from '@tasks/task.types.js';
+import type { TPartialTask } from '@tasks/task.model.js';
 
 
 @injectable()
 export class TaskService implements ITaskService {
-    private taskRepository: TaskRepository;
 
     constructor(
-        @inject(TYPES.ITaskRepository) taskRepository: TaskRepository
-    ) {
-        this.taskRepository = taskRepository;
-    }
+        @inject(TYPES.ITaskRepository) private taskRepository: TaskRepository
+    ) {}
 
     findAll() { 
         return this.taskRepository.findAll(); 

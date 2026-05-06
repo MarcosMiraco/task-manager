@@ -1,9 +1,9 @@
 import { Router, type Application } from 'express';
 import { routeHandler } from '@utils/route.handler.js';
 import { container } from '@container/inversify.config.js';
-import { methodNotAllowedHandler } from '@shared/utils/error.handler.js';
 import { TYPES } from '@shared/container/inversify.types.js';
-import type { ITaskController } from './task.types.js';
+import { methodNotAllowedHandler } from '@shared/utils/error.handler.js';
+import type { ITaskController } from '@tasks/task.types.js';
 import type { IModule } from '@src/shared/types/loader.types.js';
 
 
