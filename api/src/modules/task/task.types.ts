@@ -1,30 +1,28 @@
 import type { ApiResponse } from "@shared/types/http.types.js";
 import type { Request, Response } from "express";
+import type { TPartialTask, TTask } from "./task.model.js";
 
-export interface Task {
-    id: string;
-    title: string;
-    description: string;
-    createdAt: Date;
-}
 
 export interface ITaskRepository {
-    findAll(): Task[];
-    create(data: Omit<Task, 'id' | 'createdAt'>): Task;
-    delete(taskId: string): boolean;
-    update(taskId: string, task: Omit<Task, 'id' | 'createdAt'>): Task;
+    findAll(): Promise<TTask[]>;
+    findById(taskId: string): Promise<TTask>;
+    create(data: TPartialTask): Promise<TTask>;
+    delete(taskId: string): Promise<TTask>;
+    update(taskId: string, task: TPartialTask): Promise<TTask>;
 }
 
 export interface ITaskService {
-    listTasks(): Task[];
-    createTask(title: string, description: string): Task;
-    deleteTask(taskId: string): string;
-    updateTask(taskId: string, task: Omit<Task, 'id' | 'createdAt'>): Task;
+    findAll(): Promise<TTask[]>;
+    findById(taskId: string): Promise<TTask>;
+    create(title: string, description: string): Promise<TTask>;
+    delete(taskId: string): Promise<TTask>;
+    update(taskId: string, task: TPartialTask): Promise<TTask>;
 }
 
 export interface ITaskController {
-    list(request: Request, response: Response): ApiResponse<Task[]>;
-    create(request: Request, response: Response): ApiResponse<Task>;
-    delete(request: Request, response: Response): ApiResponse<string>;
-    update(request: Request, response: Response): ApiResponse<Task>;
+    findAll(request: Request, response: Response): Promise<ApiResponse<TTask[]>>;
+    findById(request: Request, response: Response): Promise<ApiResponse<TTask>>;
+    create(request: Request, response: Response): Promise<ApiResponse<TTask>>;
+    delete(request: Request, response: Response): Promise<ApiResponse<TTask>>;
+    update(request: Request, response: Response): Promise<ApiResponse<TTask>>;
 }

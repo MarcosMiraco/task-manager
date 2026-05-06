@@ -1,50 +1,46 @@
 import { injectable } from "inversify";
-import type { ITaskRepository, Task } from "@tasks/task.types.js";
+import type { ITaskRepository } from "@tasks/task.types.js";
 import { ErrorHTTP } from "@src/shared/types/http.types.js";
+import { TaskModel, type TPartialTask, type TTask } from "@tasks/task.model.js";
 
 
 @injectable()
 export class TaskRepository implements ITaskRepository {
-    /* WIP
-      Banco de dados em memória por enquanto
-    */
-    private tasks: Task[] = [];
+    async findAll() { 
+        const tasks = await TaskModel.find().exec();
 
-    findAll() { return this.tasks }
+        return tasks;
+    }
 
-    create(data: Omit<Task, 'id' | 'createdAt'>) {
-        const task: Task = {
-            id: Math.random().toString(36).substring(2, 9),
+    async findById(taskId: string) { 
+        const task = await TaskModel.find({ _id: taskId }).exec();
+        if (!task) throw new ErrorHTTP(404, "Task Not Found");
+
+        return task as unknown as TTask;
+    }
+
+    async create(data: TPartialTask) {
+        const task: TTask = {
             ...data,
             createdAt: new Date(),
         };
-        this.tasks.push(task);
+
+        return await TaskModel.create(task);
+    }
+
+    async delete(taskId: string) {
+        const task = await TaskModel.findOneAndDelete({ _id: taskId })
+        if (!task) throw new ErrorHTTP(404, "Task Not Found");
 
         return task;
     }
 
-    delete(taskId: string) {
-        const taskIndex = this.tasks.findIndex((t) => t.id === taskId);
-        console.log('Deleting task with id:', taskId, 'Found index:', taskIndex, this.tasks);
-        if (taskIndex === -1) {
+    async update(taskId: string, task: TPartialTask) {
+        const updatedTask = await TaskModel.findByIdAndUpdate(taskId, task, { new: true })
+        if (!updatedTask) {
             throw new ErrorHTTP(404, 'Task not found');
         }
-        this.tasks.splice(taskIndex, 1);
-        
-        return true;
-    }
 
-    update(taskId: string, task: Omit<Task, 'id' | 'createdAt'>) {
-        const taskIndex = this.tasks.findIndex((t) => t.id === taskId);
-        if (taskIndex === -1) {
-            throw new ErrorHTTP(404, 'Task not found');
-        }
-        const updatedTask = {
-            ...this.tasks[taskIndex],
-            ...task
-        } as Task;
-
-        this.tasks[taskIndex] = updatedTask;
         return updatedTask;
     }
 };

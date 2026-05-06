@@ -10,7 +10,7 @@ import type { IModule } from '@src/shared/types/loader.types.js';
 const taskController = container.get<ITaskController>(TYPES.ITaskController);
 const router = Router();
 
-router.get('/', routeHandler(taskController.list));
+router.get('/', routeHandler(taskController.findAll));
 router.post('/', routeHandler(taskController.create));
 router.delete('/:taskId', routeHandler(taskController.delete));
 router.patch('/:taskId', routeHandler(taskController.update));

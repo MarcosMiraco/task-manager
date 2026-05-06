@@ -1,7 +1,8 @@
 import { inject, injectable } from 'inversify';
 import { TaskRepository } from '@tasks/task.repository.js';
-import type { ITaskService, Task } from '@tasks/task.types.js';
+import type { ITaskService } from '@tasks/task.types.js';
 import { TYPES } from '@shared/container/inversify.types.js';
+import type { TPartialTask } from './task.model.js';
 
 
 @injectable()
@@ -14,18 +15,23 @@ export class TaskService implements ITaskService {
         this.taskRepository = taskRepository;
     }
 
-    listTasks() { return this.taskRepository.findAll(); }
+    findAll() { 
+        return this.taskRepository.findAll(); 
+    }
 
-    createTask(title: string, description: string) {
+    findById(taskId: string) {
+        return this.taskRepository.findById(taskId);
+    }
+
+    create(title: string, description: string) {
         return this.taskRepository.create({ title, description });
     }
 
-    deleteTask(taskId: string) {
-        this.taskRepository.delete(taskId);
-        return "Task deleted successfully";
+    delete(taskId: string) {
+        return this.taskRepository.delete(taskId);
     }
 
-    updateTask(taskId: string, task: Omit<Task, 'id' | 'createdAt'>) {
+    update(taskId: string, task: TPartialTask) {
         return this.taskRepository.update(taskId, task);
     }
 };

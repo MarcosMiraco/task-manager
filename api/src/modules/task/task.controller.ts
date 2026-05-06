@@ -16,28 +16,38 @@ export class TaskController implements ITaskController {
         this.taskService = taskService;
     }
 
-    list = () => {
-        return createApiResponse(this.taskService.listTasks());
+    findAll = async () => {
+        const serviceResponse = await this.taskService.findAll();
+
+        return createApiResponse(serviceResponse);
     }
 
-    create = (request: Request) => {
-        const { title, description } = request.body;
-
-        return createApiResponse(this.taskService.createTask(title, description), 201);
-    }
-
-    delete = (request: Request) => {
+    findById = async (request: Request) => {
         const { taskId } = request.params;
+        const serviceResponse = await this.taskService.findById(taskId as string);
 
-        return createApiResponse({
-            message: this.taskService.deleteTask(taskId as string)
-        });
+        return createApiResponse(serviceResponse);
     }
 
-    update = (request: Request) => {
+    create = async (request: Request) => {
+        const { title, description } = request.body;
+        const serviceResponse = await this.taskService.create(title, description);
+
+        return createApiResponse(serviceResponse, 201);
+    }
+
+    delete = async (request: Request) => {
+        const { taskId } = request.params;
+        const serviceResponse = await this.taskService.delete(taskId as string);
+
+        return createApiResponse(serviceResponse);
+    }
+
+    update = async (request: Request) => {
         const { taskId } = request.params;
         const { title, description } = request.body;
+        const serviceResponse = await this.taskService.update(taskId as string, { title, description });
 
-        return createApiResponse(this.taskService.updateTask(taskId as string, { title, description }));
+        return createApiResponse(serviceResponse);
     }
 };
