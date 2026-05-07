@@ -35,7 +35,7 @@ export class TaskController implements ITaskController {
 
     delete = async (request: Request) => {
         const { taskId } = request.params;
-        const serviceResponse = await this.taskService.delete(taskId as string);
+        const serviceResponse = await this.taskService.deleteKeyAndGet(taskId as string);
 
         return createApiResponse(serviceResponse);
     }

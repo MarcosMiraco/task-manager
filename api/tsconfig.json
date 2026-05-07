@@ -12,12 +12,14 @@
         "types": [],
         "paths": {
             "@src/*": ["./src/*"],
-            "@database/*": ["./src/database/*"],
-            "@container/*": ["./src/shared/container/*"],
+            "@cache/*": ["./src/cache/*"],
             "@shared/*": ["./src/shared/*"],
             "@routes/*": ["./src/routes/*"],
+            "@database/*": ["./src/database/*"],
+            "@tasks/*": ["./src/modules/task/*"],
             "@utils/*": ["./src/shared/utils/*"],
-            "@tasks/*": ["./src/modules/task/*"]
+            "@models/*": ["./src/shared/models/*"],
+            "@container/*": ["./src/shared/container/*"],
         },
         // For nodejs:
         // "lib": ["esnext"],

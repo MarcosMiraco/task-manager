@@ -19,7 +19,7 @@ export class TaskRepository implements ITaskRepository {
         return tasks;
     }
 
-    async findById(taskId: string) { 
+    async findById(taskId: string): Promise<TTask> { 
         const task = await this.taskModel.find({ _id: taskId }).exec();
         if (!task) throw new ErrorHTTP(404, "Task Not Found");
 
